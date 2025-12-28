@@ -22,12 +22,23 @@ for t in saved_tasks:
 @app.route("/tasks", methods=["POST"])
 def create_task():
     data = request.json
-    task = service.add_task(
-        data["title"],
-        data["description"],
-        data["deadline"],
-        data["priority"]
-    )
+
+    title = data.get("title")
+    description = data.get("description")
+    deadline = data.get("deadline")
+    priority = data.get("priority")
+
+    if not title or not deadline or not priority:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    if priority.lower() not in ["high", "medium", "low"]:
+        return jsonify({"error": "Invalid priority value"}), 400
+
+    priority = priority.capitalize()
+
+    task = Task(title, description, deadline, priority)
+    service.add_task(task)
+
     return jsonify(task.to_dict()), 201
 
 @app.route("/tasks", methods=["GET"])
@@ -37,8 +48,13 @@ def get_tasks():
 @app.route("/tasks/<int:index>", methods=["PUT"])
 def update_task(index):
     data = request.json
+
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
     task = service.edit_task(index, **data)
     return jsonify(task.to_dict())
+
 
 @app.route("/tasks/<int:index>", methods=["DELETE"])
 def delete_task(index):
