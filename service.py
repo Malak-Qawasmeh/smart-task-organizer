@@ -33,8 +33,11 @@ class TaskService:
     def list_tasks(self):
         return self.tasks
 
-    def sort_by_deadline(self):
-        self.tasks.sort(key=lambda t: t.deadline)
+def sort_by_deadline(self):
+    self.tasks.sort(
+        key=lambda t: datetime.strptime(t.deadline, "%Y-%m-%d")
+    )
+
 
     def sort_by_priority(self):
         order = {"High": 1, "Medium": 2, "Low": 3}
