@@ -40,8 +40,10 @@ def sort_by_deadline(self):
 
 
     def sort_by_priority(self):
-        order = {"High": 1, "Medium": 2, "Low": 3}
-        self.tasks.sort(key=lambda t: order[t.priority])
+    order = {"high": 1, "medium": 2, "low": 3}
+    self.tasks.sort(
+        key=lambda t: order.get(t.priority.lower(), 4)
+    )
 
     def filter_tasks(self, filter_type):
         if filter_type == "completed":
