@@ -2,7 +2,7 @@ name: SonarCloud Analysis
 
 on:
   push:
-    branches:  
+    branches: 
       - main
   pull_request: 
     types: [opened, synchronize, reopened]
@@ -16,14 +16,14 @@ jobs:
       - name: Checkout code
         uses:  actions/checkout@v4
         with: 
-          fetch-depth: 0
+          fetch-depth:  0
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN:  ${{ secrets. SONAR_TOKEN }}
-        with: 
+          SONAR_TOKEN: ${{ secrets. SONAR_TOKEN }}
+        with:
           args: >
-            -Dsonar.projectKey=ruaidris_smart-task-organizer
+            -Dsonar. projectKey=ruaidris_smart-task-organizer
             -Dsonar.organization=ruaidris
