@@ -4,164 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Task Organizer</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-        }
-        body {
-            background:  linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: white;
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-        }
-        .card {
-            background:  white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius:  8px;
-            font-size:  16px;
-        }
-        input:focus, select:focus {
-            border-color: #667eea;
-            outline:none;
-        }
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-        .btn:hover {
-            transform: scale(1.05);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-        .btn-success {
-            background:  #28a745;
-            color: white;
-        }
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-        .task-list {
-            list-style: none;
-            padding: 0;
-        }
-        .task-item {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-right: 5px solid #667eea;
-        }
-        .task-item.completed {
-            border-right-color:  #28a745;
-            opacity: 0.7;
-        }
-        .task-info h3 {
-            margin: 0 0 5px 0;
-            color: #333;
-        }
-        .task-info p {
-            margin: 0;
-            color: #666;
-            font-size: 14px;
-        }
-        .priority-high { color: #dc3545; }
-        .priority-medium { color: #ffc107; }
-        .priority-low { color: #28a745; }
-        .task-actions button {
-            margin-right: 5px;
-        }
-        .status-badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-right: 10px;
-        }
-        .status-todo { background: #ffc107; color: #000; }
-        .status-completed { background: #28a745; color:  white; }
-    </style>
+    <!-- Flatpickr for Date/Time Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2? family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>📋 Smart Task Organizer</h1>
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-tasks"></i> Smart Task Organizer</h1>
+            <p>نظّم مهامك بذكاء وفعالية</p>
+        </div>
+        
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number" id="totalTasks">0</div>
+                <div class="stat-label">إجمالي المهام</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="completedTasks">0</div>
+                <div class="stat-label">مكتملة</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="pendingTasks">0</div>
+                <div class="stat-label">قيد التنفيذ</div>
+            </div>
+        </div>
         
         <!-- Add Task Form -->
         <div class="card">
-            <h2>➕ إضافة مهمة جديدة</h2>
+            <h2 class="card-title"><i class="fas fa-plus-circle"></i> إضافة مهمة جديدة</h2>
             <form id="taskForm">
-                <div class="form-group">
-                    <label>العنوان:</label>
-                    <input type="text" id="title" required placeholder="أدخل عنوان المهمة">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-heading"></i> العنوان</label>
+                        <input type="text" class="form-control" id="title" required placeholder="أدخل عنوان المهمة... ">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-align-left"></i> الوصف</label>
+                        <input type="text" class="form-control" id="description" placeholder="أدخل وصف المهمة...">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i> التاريخ والوقت</label>
+                        <div class="datetime-wrapper">
+                            <i class="fas fa-clock"></i>
+                            <input type="text" class="form-control" id="deadline" required placeholder="اختر التاريخ والوقت... ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-flag"></i> الأولوية</label>
+                        <select class="form-control" id="priority">
+                            <option value="High">🔴 عالية - عاجل</option>
+                            <option value="Medium" selected>🟡 متوسطة - مهم</option>
+                            <option value="Low">🟢 منخفضة - يمكن تأجيله</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width" style="text-align: center; margin-top: 10px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> إضافة المهمة
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>الوصف:</label>
-                    <input type="text" id="description" placeholder="أدخل وصف المهمة">
-                </div>
-                <div class="form-group">
-                    <label>الموعد النهائي:</label>
-                    <input type="date" id="deadline" required>
-                </div>
-                <div class="form-group">
-                    <label>الأولوية:</label>
-                    <select id="priority">
-                        <option value="High">عالية</option>
-                        <option value="Medium" selected>متوسطة</option>
-                        <option value="Low">منخفضة</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">إضافة المهمة</button>
             </form>
         </div>
         
         <!-- Task List -->
         <div class="card">
-            <h2>📝 قائمة المهام</h2>
+            <h2 class="card-title"><i class="fas fa-list-check"></i> قائمة المهام</h2>
             <ul class="task-list" id="taskList">
                 <!-- Tasks will be loaded here -->
             </ul>
         </div>
     </div>
 
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+    
     <script>
         const API_URL = 'http://127.0.0.1:5000';
+
+        // Initialize Flatpickr Date/Time Picker
+        flatpickr("#deadline", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            locale: "ar",
+            time_24hr: true,
+            minDate: "today",
+            disableMobile: true,
+            placeholder: "اختر التاريخ والوقت.. .",
+            theme: "material_blue"
+        });
 
         // Load tasks on page load
         document.addEventListener('DOMContentLoaded', loadTasks);
@@ -173,19 +113,22 @@
             const task = {
                 title: document.getElementById('title').value,
                 description: document. getElementById('description').value,
-                deadline:  document.getElementById('deadline').value,
-                priority: document.getElementById('priority').value
+                deadline: document.getElementById('deadline').value,
+                priority: document. getElementById('priority').value
             };
 
             const response = await fetch(`${API_URL}/tasks`, {
                 method: 'POST',
-                headers:  { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(task)
             });
 
             if (response.ok) {
                 document.getElementById('taskForm').reset();
+                // Reset flatpickr
+                document.getElementById('deadline')._flatpickr. clear();
                 loadTasks();
+                showNotification('تمت إضافة المهمة بنجاح!  ✅');
             }
         });
 
@@ -193,8 +136,24 @@
             const response = await fetch(`${API_URL}/tasks`);
             const tasks = await response.json();
             
+            // Update stats
+            const completed = tasks.filter(t => t.status === 'Completed').length;
+            document.getElementById('totalTasks').textContent = tasks.length;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('pendingTasks').textContent = tasks.length - completed;
+            
             const taskList = document.getElementById('taskList');
             taskList.innerHTML = '';
+
+            if (tasks.length === 0) {
+                taskList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>لا توجد مهام حالياً<br>ابدأ بإضافة مهمة جديدة! </p>
+                    </div>
+                `;
+                return;
+            }
 
             tasks.forEach((task, index) => {
                 const li = document.createElement('li');
@@ -202,18 +161,32 @@
                 
                 const priorityClass = `priority-${task. priority. toLowerCase()}`;
                 const statusClass = task.status === 'Completed' ? 'status-completed' : 'status-todo';
+                const statusText = task.status === 'Completed' ? 'مكتملة' :  'قيد التنفيذ';
+                
+                const priorityText = {
+                    'High': 'عالية',
+                    'Medium': 'متوسطة', 
+                    'Low': 'منخفضة'
+                };
                 
                 li.innerHTML = `
                     <div class="task-info">
-                        <h3>${task.title}</h3>
-                        <p>${task.description || 'بدون وصف'}</p>
-                        <p>📅 ${task.deadline} | <span class="${priorityClass}">⚡ ${task. priority}</span></p>
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-description">${task.description || 'بدون وصف'}</div>
+                        <div class="task-meta">
+                            <span><i class="fas fa-calendar"></i> ${task.deadline}</span>
+                            <span class="priority-badge ${priorityClass}">${priorityText[task.priority] || task.priority}</span>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
                     </div>
                     <div class="task-actions">
-                        <span class="status-badge ${statusClass}">${task.status}</span>
                         ${task.status !== 'Completed' ? 
-                            `<button class="btn btn-success" onclick="completeTask(${index})">✅</button>` : ''}
-                        <button class="btn btn-danger" onclick="deleteTask(${index})">🗑️</button>
+                            `<button class="btn btn-success btn-icon" onclick="completeTask(${index})" title="إكمال المهمة">
+                                <i class="fas fa-check"></i>
+                            </button>` : ''}
+                        <button class="btn btn-danger btn-icon" onclick="deleteTask(${index})" title="حذف المهمة">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 `;
                 taskList.appendChild(li);
@@ -223,13 +196,39 @@
         async function completeTask(index) {
             await fetch(`${API_URL}/tasks/${index}/complete`);
             loadTasks();
+            showNotification('تم إكمال المهمة!  🎉');
         }
 
         async function deleteTask(index) {
             if (confirm('هل أنت متأكد من حذف هذه المهمة؟')) {
                 await fetch(`${API_URL}/tasks/${index}`, { method: 'DELETE' });
                 loadTasks();
+                showNotification('تم حذف المهمة!  🗑️');
             }
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification. style.cssText = `
+                position: fixed;
+                top:  20px;
+                left: 50%;
+                transform:  translateX(-50%);
+                background:  linear-gradient(135deg, #00d9ff, #00ff88);
+                color: #1a1a2e;
+                padding:  15px 30px;
+                border-radius: 10px;
+                font-weight: 700;
+                font-family: 'Tajawal', sans-serif;
+                z-index: 9999;
+                animation: fadeIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document. body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
     </script>
 </body>

@@ -1,14 +1,14 @@
 # FR1 & FR8
 
-
+from datetime import datetime
 from models import Task
 
-class TaskService:
+
+class TaskService: 
     def __init__(self):
         self.tasks = []
 
-    def add_task(self, title, description, deadline, priority):
-        task = Task(title, description, deadline, priority)
+    def add_task(self, task):
         self.tasks.append(task)
         return task
 
@@ -16,11 +16,11 @@ class TaskService:
         task = self.tasks[index]
         if title:
             task.title = title
-        if description:
+        if description: 
             task.description = description
         if deadline:
-            task.deadline = deadline
-        if priority:
+            task. deadline = deadline
+        if priority: 
             task.priority = priority
         return task
 
@@ -31,23 +31,22 @@ class TaskService:
         self.tasks[index].status = "Completed"
 
     def list_tasks(self):
-        return self.tasks
+        return self. tasks
 
-def sort_by_deadline(self):
-    self.tasks.sort(
-        key=lambda t: datetime.strptime(t.deadline, "%Y-%m-%d")
-    )
-
+    def sort_by_deadline(self):
+        self.tasks.sort(
+            key=lambda t: datetime.strptime(t.deadline, "%Y-%m-%d")
+        )
 
     def sort_by_priority(self):
-    order = {"high": 1, "medium": 2, "low": 3}
-    self.tasks.sort(
-        key=lambda t: order.get(t.priority.lower(), 4)
-    )
+        order = {"high": 1, "medium": 2, "low":  3}
+        self.tasks.sort(
+            key=lambda t: order. get(t.priority. lower(), 4)
+        )
 
     def filter_tasks(self, filter_type):
         if filter_type == "completed":
-            return [t for t in self.tasks if t.status == "Completed"]
+            return [t for t in self. tasks if t.status == "Completed"]
         if filter_type == "not_completed":
             return [t for t in self.tasks if t.status != "Completed"]
         if filter_type == "high_priority":

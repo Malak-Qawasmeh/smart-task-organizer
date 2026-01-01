@@ -11,12 +11,12 @@ class TaskOrganizerGUI:
         self.root.geometry("800x600")
         self.root.configure(bg="#f0f0f0")
         
-        # Initialize services
+       
         self.service = TaskService()
         self.storage = FileManager()
         self.load_saved_tasks()
         
-        # Create UI
+        
         self.create_widgets()
         self.refresh_task_list()
     
@@ -31,7 +31,7 @@ class TaskOrganizerGUI:
     def create_widgets(self):
         """Create all UI components"""
         
-        # === Header Frame ===
+       
         header_frame = tk.Frame(self. root, bg="#4a90d9", pady=15)
         header_frame.pack(fill=tk.X)
         
