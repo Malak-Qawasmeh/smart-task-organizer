@@ -1,417 +1,710 @@
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background:  linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height:  100vh;
-            padding: 20px;
-            color: #fff;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 40px 0;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            font-size: 3em;
-            font-weight: 800;
-            background: linear-gradient(135deg, #00d9ff, #00ff88);
-            -webkit-background-clip:  text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
-        }
-        
-        .header p {
-            color: #888;
-            font-size: 1.2em;
-        }
-        
-        /* Cards */
-        .card {
-            background:  rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        
-        .card-title {
-            font-size: 1.5em;
-            font-weight: 700;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap:  10px;
-            color: #00d9ff;
-        }
-        
-        .card-title i {
-            font-size: 1.2em;
-        }
-        
-        /* Form Styles */
-        .form-grid {
-            display:  grid;
-            grid-template-columns:  repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-        
-        .form-group label {
-            display:  block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color:  #ccc;
-            font-size: 0.95em;
-        }
-        
-        .form-group label i {
-            margin-left: 5px;
-            color: #00d9ff;
-        }
-        
-        .form-control {
-            width:  100%;
-            padding: 15px 20px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            color:  #fff;
-            font-size: 1em;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color:  #00d9ff;
-            background: rgba(0, 217, 255, 0.1);
-            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
-        }
-        
-        .form-control::placeholder {
-            color: #666;
-        }
-        
-        select.form-control {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2300d9ff' viewBox='0 0 16 16'%3E%3Cpath d='M7. 247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: left 15px center;
-            padding-left: 40px;
-        }
-        
-        select.form-control option {
-            background:  #1a1a2e;
-            color:  #fff;
-        }
-        
-        /* DateTime Picker Styles */
-        .datetime-wrapper {
-            position: relative;
-        }
-        
-        .datetime-wrapper i {
-            position:  absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #00d9ff;
-            pointer-events: none;
-        }
-        
-        .datetime-wrapper .form-control {
-            padding-left: 45px;
-            cursor: pointer;
-        }
-        
-        /* Priority Colors */
-        .priority-high { 
-            background: linear-gradient(135deg, #ff4757, #ff3838) !important;
-            border-color: #ff4757 !important;
-        }
-        .priority-medium { 
-            background: linear-gradient(135deg, #ffa502, #ff9500) !important;
-            border-color:  #ffa502 !important;
-        }
-        .priority-low { 
-            background: linear-gradient(135deg, #2ed573, #17c964) !important;
-            border-color:  #2ed573 !important;
-        }
-        
-        /* Buttons */
-        .btn {
-            padding:  15px 40px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: 700;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #00d9ff, #00ff88);
-            color: #1a1a2e;
-            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.6);
-        }
-        
-        .btn-success {
-            background:  linear-gradient(135deg, #2ed573, #17c964);
-            color: #fff;
-            padding: 10px 15px;
-            font-size: 0.9em;
-        }
-        
-        .btn-danger {
-            background:  linear-gradient(135deg, #ff4757, #ff3838);
-            color: #fff;
-            padding: 10px 15px;
-            font-size: 0.9em;
-        }
-        
-        .btn-icon {
-            padding: 10px 15px;
-            border-radius: 10px;
-        }
-        
-        /* Task List */
-        .task-list {
-            list-style:  none;
-        }
-        
-        .task-item {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition:  all 0.3s ease;
-        }
-        
-        .task-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform:  translateX(-5px);
-            border-color: rgba(0, 217, 255, 0.3);
-        }
-        
-        .task-item.completed {
-            opacity: 0.6;
-            border-color: #2ed573;
-        }
-        
-        .task-item.completed .task-title {
-            text-decoration: line-through;
-            color: #888;
-        }
-        
-        .task-info {
-            flex:  1;
-        }
-        
-        .task-title {
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-        
-        .task-description {
-            color: #888;
-            font-size: 0.95em;
-            margin-bottom: 10px;
-        }
-        
-        .task-meta {
-            display:  flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .task-meta span {
-            display: flex;
-            align-items: center;
-            gap:  5px;
-            font-size: 0.85em;
-            color: #666;
-        }
-        
-        .task-meta i {
-            color:  #00d9ff;
-        }
-        
-        .priority-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 600;
-            color: #fff;
-        }
-        
-        .status-badge {
-            padding: 5px 15px;
-            border-radius:  20px;
-            font-size:  0.8em;
-            font-weight: 600;
-        }
-        
-        .status-todo {
-            background: rgba(255, 165, 2, 0.2);
-            color: #ffa502;
-            border:  1px solid #ffa502;
-        }
-        
-        .status-completed {
-            background:  rgba(46, 213, 115, 0.2);
-            color:  #2ed573;
-            border: 1px solid #2ed573;
-        }
-        
-        .task-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        /* Empty State */
-        .empty-state {
-            text-align:  center;
-            padding: 60px 20px;
-            color: #666;
-        }
-        
-        .empty-state i {
-            font-size: 4em;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .empty-state p {
-            font-size: 1.2em;
-        }
-        
-        /* Stats Bar */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap:  30px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-number {
-            font-size: 2em;
-            font-weight: 800;
-            color:  #00d9ff;
-        }
-        
-        .stat-label {
-            font-size: 0.9em;
-            color: #888;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .form-group.full-width {
-                grid-column:  span 1;
-            }
-            .task-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            .task-actions {
-                width: 100%;
-                justify-content:  flex-end;
-            }
-            .stats-bar {
-                gap: 15px;
-            }
-            .stat-item {
-                padding: 10px 20px;
-            }
-        }
-        
-        /* Flatpickr Custom Styles */
-        .flatpickr-calendar {
-            font-family: 'Tajawal', sans-serif ! important;
-            background: #1a1a2e !important;
-            border: 1px solid rgba(0, 217, 255, 0.3) !important;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
-        }
-        
-        .flatpickr-day {
-            color: #fff !important;
-        }
-        
-        .flatpickr-day:hover {
-            background: rgba(0, 217, 255, 0.3) !important;
-            border-color: #00d9ff ! important;
-        }
-        
-        .flatpickr-day.selected {
-            background:  #00d9ff ! important;
-            border-color: #00d9ff !important;
-            color: #1a1a2e !important;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity:  1; transform:  translateY(0); }
-        }
-        
-        .card {
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .task-item {
-            animation: fadeIn 0.3s ease;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background:  linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height:  100vh;
+    padding: 20px;
+    color: #fff;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 40px 0;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 3em;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00d9ff, #00ff88);
+    -webkit-background-clip:  text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+}
+
+.header p {
+    color: #888;
+    font-size: 1.2em;
+}
+
+/* Cards */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:  0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.5s ease;
+}
+
+.card-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap:  10px;
+    color: #00d9ff;
+}
+
+.card-title i {
+    font-size: 1.2em;
+}
+
+/* Form Styles */
+.form-grid {
+    display:  grid;
+    grid-template-columns:  repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color:  #ccc;
+    font-size: 0.95em;
+}
+
+.form-group label i {
+    margin-left: 5px;
+    color: #00d9ff;
+}
+
+.form-control {
+    width:  100%;
+    padding: 15px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 1em;
+    font-family: 'Tajawal', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color:  #00d9ff;
+    background: rgba(0, 217, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+}
+
+.form-control::placeholder {
+    color: #666;
+}
+
+select.form-control {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2300d9ff' viewBox='0 0 16 16'%3E%3Cpath d='M7. 247 11.14L2. 451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    padding-left: 40px;
+}
+
+select.form-control option {
+    background: #1a1a2e;
+    color:  #fff;
+}
+
+/* DateTime Picker Styles */
+.datetime-wrapper {
+    position: relative;
+}
+
+.datetime-wrapper i {
+    position:  absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #00d9ff;
+    pointer-events: none;
+}
+
+.datetime-wrapper .form-control {
+    padding-left: 45px;
+    cursor: pointer;
+}
+
+/* Priority Colors */
+.priority-high {
+    background:  linear-gradient(135deg, #ff4757, #ff3838) !important;
+    border-color: #ff4757 !important;
+}
+
+.priority-medium {
+    background: linear-gradient(135deg, #ffa502, #ff9500) !important;
+    border-color:  #ffa502 !important;
+}
+
+.priority-low {
+    background:  linear-gradient(135deg, #2ed573, #17c964) !important;
+    border-color:  #2ed573 !important;
+}
+
+/* Buttons */
+.btn {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: 'Tajawal', sans-serif;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background:  linear-gradient(135deg, #00d9ff, #00ff88);
+    color: #1a1a2e;
+    box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+}
+
+.btn-primary:hover {
+    transform:  translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 217, 255, 0.6);
+}
+
+.btn-success {
+    background:  linear-gradient(135deg, #2ed573, #17c964);
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 0.9em;
+}
+
+.btn-danger {
+    background:  linear-gradient(135deg, #ff4757, #ff3838);
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 0.9em;
+}
+
+.btn-icon {
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+/* Task List */
+.task-list {
+    list-style: none;
+}
+
+.task-item {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.3s ease;
+}
+
+.task-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(-5px);
+    border-color: rgba(0, 217, 255, 0.3);
+}
+
+.task-item.completed {
+    opacity: 0.6;
+    border-color: #2ed573;
+}
+
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.task-info {
+    flex:  1;
+}
+
+.task-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color:  #fff;
+}
+
+.task-description {
+    color: #888;
+    font-size: 0.95em;
+    margin-bottom: 10px;
+}
+
+.task-meta {
+    display:  flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.task-meta span {
+    display: flex;
+    align-items: center;
+    gap:  5px;
+    font-size: 0.85em;
+    color: #666;
+}
+
+.task-meta i {
+    color: #00d9ff;
+}
+
+.priority-badge {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #fff;
+}
+
+.status-badge {
+    padding: 5px 15px;
+    border-radius:  20px;
+    font-size:  0.8em;
+    font-weight: 600;
+}
+
+.status-todo {
+    background:  rgba(255, 165, 2, 0.2);
+    color: #ffa502;
+    border:  1px solid #ffa502;
+}
+
+.status-completed {
+    background:  rgba(46, 213, 115, 0.2);
+    color: #2ed573;
+    border: 1px solid #2ed573;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding:  60px 20px;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 4em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.empty-state p {
+    font-size: 1.2em;
+}
+
+/* Stats Bar */
+.stats-bar {
+    display: flex;
+    justify-content: center;
+    gap:  30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+    font-size: 2em;
+    font-weight: 800;
+    color:  #00d9ff;
+}
+
+.stat-label {
+    font-size:  0.9em;
+    color:  #888;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-group.full-width {
+        grid-column:  span 1;
+    }
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .task-actions {
+        width: 100%;
+        justify-content:  flex-end;
+    }
+    .stats-bar {
+        gap: 15px;
+    }
+    .stat-item {
+        padding: 10px 20px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform:  translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Flatpickr Calendar Complete Fix ===== */
+.flatpickr-calendar {
+    background: #1a1a2e ! important;
+    border:  2px solid #00d9ff !important;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6) !important;
+    font-family: 'Tajawal', sans-serif !important;
+    border-radius: 15px !important;
+    overflow: hidden ! important;
+}
+
+/* Header - Month & Year */
+.flatpickr-months {
+    background:  #0f3460 ! important;
+    padding: 10px 0 !important;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.flatpickr-month {
+    background:  transparent !important;
+    color: #fff !important;
+    height: 40px ! important;
+}
+
+.flatpickr-current-month {
+    color: #fff !important;
+    font-size: 1.2em !important;
+    font-weight: 700 !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    background:  #1a1a2e !important;
+    color: #00d9ff !important;
+    font-weight: 600 ! important;
+    border:  1px solid #00d9ff ! important;
+    border-radius: 8px !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+    background: #0f3460 !important;
+}
+
+.flatpickr-current-month input.cur-year {
+    color: #00d9ff !important;
+    font-weight: 700 !important;
+    font-size: 1em !important;
+}
+
+/* Navigation Arrows */
+.flatpickr-prev-month,
+.flatpickr-next-month {
+    fill: #00d9ff !important;
+    color: #00d9ff !important;
+    padding: 10px ! important;
+    transition: all 0.3s ease !important;
+}
+
+.flatpickr-prev-month:hover,
+.flatpickr-next-month:hover {
+    background: rgba(0, 217, 255, 0.2) !important;
+    border-radius: 50% !important;
+}
+
+.flatpickr-prev-month svg,
+.flatpickr-next-month svg {
+    fill: #00d9ff !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.flatpickr-prev-month:hover svg,
+.flatpickr-next-month:hover svg {
+    fill: #00ff88 !important;
+}
+
+/* Weekdays Header - أيام الأسبوع */
+.flatpickr-weekdays {
+    background: #16213e !important;
+    padding: 10px 0 !important;
+}
+
+.flatpickr-weekdaycontainer {
+    background: transparent !important;
+}
+
+span.flatpickr-weekday {
+    color: #00d9ff !important;
+    font-weight: 700 !important;
+    font-size:  0.95em !important;
+    background: transparent !important;
+}
+
+/* Days Container */
+.flatpickr-days {
+    background: #1a1a2e !important;
+    border: none !important;
+}
+
+.dayContainer {
+    background: #1a1a2e !important;
+    padding: 10px !important;
+}
+
+/* Day Cells - خلايا الأيام */
+.flatpickr-day {
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    font-weight: 500 !important;
+    font-size: 0.95em !important;
+    border: 2px solid transparent !important;
+    transition: all 0.2s ease !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    line-height: 36px !important;
+    margin:  2px !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(0, 217, 255, 0.3) !important;
+    border-color:  #00d9ff !important;
+    color: #fff !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+    background: linear-gradient(135deg, #00d9ff, #00ff88) !important;
+    border-color: #00d9ff !important;
+    color: #1a1a2e !important;
+    font-weight: 700 !important;
+}
+
+.flatpickr-day.today {
+    border-color: #00ff88 !important;
+    color: #00ff88 !important;
+    font-weight: 700 !important;
+}
+
+.flatpickr-day.today:hover {
+    background: rgba(0, 255, 136, 0.3) !important;
+    color: #fff !important;
+}
+
+/* Previous/Next Month Days */
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+    color: #444 !important;
+}
+
+.flatpickr-day.prevMonthDay:hover,
+.flatpickr-day.nextMonthDay:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #888 !important;
+}
+
+/* Disabled Days */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+    color: #333 !important;
+    background: transparent !important;
+    cursor: not-allowed ! important;
+}
+
+/* Time Picker */
+.flatpickr-time {
+    background: #0f3460 ! important;
+    border-top: 2px solid #00d9ff !important;
+    padding: 15px 10px !important;
+    border-radius: 0 0 15px 15px !important;
+}
+
+.flatpickr-time input {
+    color: #00d9ff !important;
+    background: #1a1a2e !important;
+    font-size: 1.3em !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 217, 255, 0.3) !important;
+}
+
+.flatpickr-time input:hover,
+.flatpickr-time input:focus {
+    background: rgba(0, 217, 255, 0.1) !important;
+    border-color: #00d9ff !important;
+}
+
+.flatpickr-time .flatpickr-time-separator {
+    color: #00d9ff !important;
+    font-size:  1.3em !important;
+    font-weight: 700 !important;
+}
+
+.flatpickr-time .flatpickr-am-pm {
+    color: #00d9ff !important;
+    background: #1a1a2e !important;
+    font-weight: 600 !important;
+    border-radius: 8px ! important;
+}
+
+.flatpickr-time .flatpickr-am-pm:hover {
+    background: rgba(0, 217, 255, 0.2) !important;
+}
+
+/* Number Input Arrows */
+.numInputWrapper {
+    background: transparent !important;
+}
+
+.numInputWrapper span {
+    border-color: rgba(0, 217, 255, 0.3) !important;
+    background: transparent !important;
+}
+
+.numInputWrapper span:hover {
+    background: rgba(0, 217, 255, 0.2) !important;
+}
+
+.numInputWrapper span svg path {
+    fill:  #00d9ff !important;
+}
+
+.numInputWrapper:hover {
+    background: rgba(0, 217, 255, 0.1) !important;
+}
+
+/* Scrollbar for months dropdown */
+.flatpickr-monthDropdown-months::-webkit-scrollbar {
+    width:  8px;
+}
+
+.flatpickr-monthDropdown-months::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+.flatpickr-monthDropdown-months::-webkit-scrollbar-thumb {
+    background: #00d9ff;
+    border-radius: 4px;
+}
+/* ===== Time Input Fix - إصلاح خانة الوقت ===== */
+
+.flatpickr-time {
+    background: #0f3460 !important;
+    border-top: 2px solid #00d9ff !important;
+    padding: 15px ! important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.flatpickr-time .numInputWrapper {
+    background: #1a1a2e !important;
+    border:  2px solid #00d9ff !important;
+    border-radius: 10px !important;
+    width: 70px !important;
+    height: 50px ! important;
+}
+
+.flatpickr-time input {
+    background: transparent !important;
+    color: #00d9ff !important;
+    font-size: 1.5em !important;
+    font-weight: 700 !important;
+    text-align: center ! important;
+    width: 100% ! important;
+    height: 100% ! important;
+    border: none !important;
+    padding: 0 ! important;
+}
+
+.flatpickr-time input:focus {
+    outline: none !important;
+    background: rgba(0, 217, 255, 0.1) !important;
+}
+
+.flatpickr-time .flatpickr-time-separator {
+    color: #00d9ff !important;
+    font-size: 1.8em !important;
+    font-weight:  700 !important;
+    margin:  0 10px !important;
+    line-height: 50px !important;
+}
+
+/* أسهم الزيادة والنقصان */
+.flatpickr-time .numInputWrapper span {
+    background: transparent !important;
+    border: none !important;
+    opacity: 1 !important;
+}
+
+.flatpickr-time .numInputWrapper span:hover {
+    background:  rgba(0, 217, 255, 0.2) !important;
+}
+
+.flatpickr-time .numInputWrapper span svg {
+    fill: #00d9ff !important;
+}
+
+.flatpickr-time .numInputWrapper span.arrowUp {
+    top: 0 !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.flatpickr-time .numInputWrapper span.arrowDown {
+    bottom: 0 !important;
+    border-radius: 0 0 10px 10px !important;
+}
+
+/* إخفاء AM/PM لو موجود */
+.flatpickr-time .flatpickr-am-pm {
+    background: #1a1a2e !important;
+    color: #00d9ff !important;
+    border:  2px solid #00d9ff ! important;
+    border-radius: 10px !important;
+    font-weight: 700 ! important;
+}
