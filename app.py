@@ -1,14 +1,15 @@
 # FR9 &FR10 & FR11 & REST API 
 
-
-
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from service import TaskService
 from storage import FileManager
 from models import Task
 import atexit
 
 app = Flask(__name__)
+@app.route("/")
+def home():
+    return render_template("index. html")
 service = TaskService()
 storage = FileManager()
 

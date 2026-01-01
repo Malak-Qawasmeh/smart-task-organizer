@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Organizer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        body {
+            background:  linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        .card {
+            background:  white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius:  8px;
+            font-size:  16px;
+        }
+        input:focus, select:focus {
+            border-color: #667eea;
+            outline:none;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn-success {
+            background:  #28a745;
+            color: white;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 5px solid #667eea;
+        }
+        .task-item.completed {
+            border-right-color:  #28a745;
+            opacity: 0.7;
+        }
+        .task-info h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        .task-info p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .priority-high { color: #dc3545; }
+        .priority-medium { color: #ffc107; }
+        .priority-low { color: #28a745; }
+        .task-actions button {
+            margin-right: 5px;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        .status-todo { background: #ffc107; color: #000; }
+        .status-completed { background: #28a745; color:  white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Smart Task Organizer</h1>
+        
+        <!-- Add Task Form -->
+        <div class="card">
+            <h2>➕ إضافة مهمة جديدة</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label>العنوان:</label>
+                    <input type="text" id="title" required placeholder="أدخل عنوان المهمة">
+                </div>
+                <div class="form-group">
+                    <label>الوصف:</label>
+                    <input type="text" id="description" placeholder="أدخل وصف المهمة">
+                </div>
+                <div class="form-group">
+                    <label>الموعد النهائي:</label>
+                    <input type="date" id="deadline" required>
+                </div>
+                <div class="form-group">
+                    <label>الأولوية:</label>
+                    <select id="priority">
+                        <option value="High">عالية</option>
+                        <option value="Medium" selected>متوسطة</option>
+                        <option value="Low">منخفضة</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">إضافة المهمة</button>
+            </form>
+        </div>
+        
+        <!-- Task List -->
+        <div class="card">
+            <h2>📝 قائمة المهام</h2>
+            <ul class="task-list" id="taskList">
+                <!-- Tasks will be loaded here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:5000';
+
+        // Load tasks on page load
+        document.addEventListener('DOMContentLoaded', loadTasks);
+
+        // Add task form submit
+        document.getElementById('taskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const task = {
+                title: document.getElementById('title').value,
+                description: document. getElementById('description').value,
+                deadline:  document.getElementById('deadline').value,
+                priority: document.getElementById('priority').value
+            };
+
+            const response = await fetch(`${API_URL}/tasks`, {
+                method: 'POST',
+                headers:  { 'Content-Type': 'application/json' },
+                body: JSON.stringify(task)
+            });
+
+            if (response.ok) {
+                document.getElementById('taskForm').reset();
+                loadTasks();
+            }
+        });
+
+        async function loadTasks() {
+            const response = await fetch(`${API_URL}/tasks`);
+            const tasks = await response.json();
+            
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.className = `task-item ${task.status === 'Completed' ? 'completed' : ''}`;
+                
+                const priorityClass = `priority-${task. priority. toLowerCase()}`;
+                const statusClass = task.status === 'Completed' ? 'status-completed' : 'status-todo';
+                
+                li.innerHTML = `
+                    <div class="task-info">
+                        <h3>${task.title}</h3>
+                        <p>${task.description || 'بدون وصف'}</p>
+                        <p>📅 ${task.deadline} | <span class="${priorityClass}">⚡ ${task. priority}</span></p>
+                    </div>
+                    <div class="task-actions">
+                        <span class="status-badge ${statusClass}">${task.status}</span>
+                        ${task.status !== 'Completed' ? 
+                            `<button class="btn btn-success" onclick="completeTask(${index})">✅</button>` : ''}
+                        <button class="btn btn-danger" onclick="deleteTask(${index})">🗑️</button>
+                    </div>
+                `;
+                taskList.appendChild(li);
+            });
+        }
+
+        async function completeTask(index) {
+            await fetch(`${API_URL}/tasks/${index}/complete`);
+            loadTasks();
+        }
+
+        async function deleteTask(index) {
+            if (confirm('هل أنت متأكد من حذف هذه المهمة؟')) {
+                await fetch(`${API_URL}/tasks/${index}`, { method: 'DELETE' });
+                loadTasks();
+            }
+        }
+    </script>
+</body>
+</html>
