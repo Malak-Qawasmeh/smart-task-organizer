@@ -1,19 +1,29 @@
-name: Build
+name: SonarCloud Analysis
+
 on:
   push:
-    branches:
+    branches: 
       - main
-  pull_request:
+  pull_request: 
     types: [opened, synchronize, reopened]
+
 jobs:
-  sonarqube:
-    name: SonarQube
-    runs-on: windows-latest
+  sonarcloud: 
+    name: SonarCloud Scan
+    runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses:  actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
+          fetch-depth: 0
+      
+      - name:  SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets. SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar. projectKey=ruaidris_smart-task-organizer
+            -Dsonar.organization=ruaidris
